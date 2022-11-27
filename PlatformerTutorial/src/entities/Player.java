@@ -13,7 +13,7 @@ public class Player extends Entity {
 	private int aniTick, aniIndex, aniSpeed = 25;
 	private int playerAction = IDLE;
 	private boolean moving = false, attacking = false;
-	private boolean left, up, right, down, jump;
+	private boolean left, up, right, down,jump;
 	private float playerSpeed = 1.0f * Game.SCALE;
 	private int[][] lvlData;
 	private float xDrawOffset = 21 * Game.SCALE;
@@ -22,10 +22,12 @@ public class Player extends Entity {
 	// Jumping / Gravity
 	private float airSpeed = 0f;
 	private float gravity = 0.04f * Game.SCALE;
-	private float jumpSpeed = -2.25f * Game.SCALE;
+	private float jumpSpeed = -1.5f * Game.SCALE;
 	private float fallSpeedAfterCollision = 0.5f * Game.SCALE;
+	private float jumplimit=0;
 	private boolean inAir = false;
-
+	private boolean doublejump=false;
+	private int djcount=0;
 	public Player(float x, float y, int width, int height) {
 		super(x, y, width, height);
 		loadAnimations();
@@ -88,8 +90,8 @@ public class Player extends Entity {
 	private void updatePos() {
 		moving = false;
 
-		if (jump)
-			jump();
+		if (jump) { 
+			jump();jumplimit+=1;}
 		if (!left && !right && !inAir)
 			return;
 
@@ -109,10 +111,16 @@ public class Player extends Entity {
 				hitbox.y += airSpeed;
 				airSpeed += gravity;
 				updateXPos(xSpeed);
+				if(jumplimit>=40) {
+					doublejump=false;
+					jumplimit=0;
+				}
 			} else {
 				hitbox.y = GetEntityYPosUnderRoofOrAboveFloor(hitbox, airSpeed);
-				if (airSpeed > 0)
+				if (airSpeed > 0) {
 					resetInAir();
+					resetdoublejump();
+				}
 				else
 					airSpeed = fallSpeedAfterCollision;
 				updateXPos(xSpeed);
@@ -123,12 +131,22 @@ public class Player extends Entity {
 		moving = true;
 	}
 
-	private void jump() {
-		if (inAir)
-			return;
-		inAir = true;
-		airSpeed = jumpSpeed;
+	private void resetdoublejump() {
+		djcount=0;
+		doublejump=false;
+		jumplimit=0;
+	}
 
+	private void jump() {
+		if (inAir&&!doublejump)
+			return;
+		if(djcount>=2) {
+			doublejump=false;
+		}
+		inAir=true;
+		airSpeed=jumpSpeed;
+		doublejump=true;
+		
 	}
 
 	private void resetInAir() {
@@ -209,6 +227,11 @@ public class Player extends Entity {
 
 	public void setJump(boolean jump) {
 		this.jump = jump;
+	}
+
+	public void jcount() {
+		djcount+=1;
+		
 	}
 
 }

@@ -62,6 +62,7 @@ public class Playing extends State implements Statemethods {
 			break;
 		case KeyEvent.VK_SPACE:
 			player.setJump(true);
+			player.jcount();
 			break;
 		case KeyEvent.VK_BACK_SPACE:
 			Gamestate.state = Gamestate.MENU;
