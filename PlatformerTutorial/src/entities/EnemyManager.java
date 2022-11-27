@@ -29,16 +29,16 @@ public class EnemyManager {
 				c.update();
 	}
 
-	public void draw(Graphics g) {
-		drawRobots(g);
+	public void draw(Graphics g, int xLvlOffset) {
+		drawRobots(g, xLvlOffset);
 	}
 
-	private void drawRobots(Graphics g) {
+	private void drawRobots(Graphics g, int xLvlOffset) {
 		for (Robot c : robots)
 			{	g.setColor(Color.BLACK);
-				g.fillRect((int) c.getHitbox().x, (int) c.getHitbox().y,ROBOT_WIDTH , ROBOT_HEIGHT);
+				g.fillRect((int) c.getHitbox().x - xLvlOffset, (int) c.getHitbox().y,ROBOT_WIDTH , ROBOT_HEIGHT);
 				g.setColor(Color.BLACK);
-				g.drawRect((int) c.getHitbox().x, (int) c.getHitbox().y,ROBOT_WIDTH , ROBOT_HEIGHT);
+				g.drawRect((int) c.getHitbox().x - xLvlOffset, (int) c.getHitbox().y,ROBOT_WIDTH , ROBOT_HEIGHT);
 //				c.drawHitbox(g);
 //				c.drawAttackBox(g, xLvlOffset);
 

@@ -68,7 +68,7 @@ public class Playing extends State implements Statemethods {
 		g.drawImage(backgroundImg, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
 		levelManager.draw(g, xLvlOffset);
 		player.render(g, xLvlOffset);
-		enemyManager.draw(g);
+		enemyManager.draw(g, xLvlOffset);
 	}
 
 	@Override
