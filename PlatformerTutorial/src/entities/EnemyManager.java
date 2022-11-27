@@ -1,5 +1,6 @@
 package entities;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -34,7 +35,9 @@ public class EnemyManager {
 
 	private void drawRobots(Graphics g) {
 		for (Robot c : robots)
-			{
+			{	g.setColor(Color.BLACK);
+				g.fillRect((int) c.getHitbox().x, (int) c.getHitbox().y,ROBOT_WIDTH , ROBOT_HEIGHT);
+				g.setColor(Color.BLACK);
 				g.drawRect((int) c.getHitbox().x, (int) c.getHitbox().y,ROBOT_WIDTH , ROBOT_HEIGHT);
 //				c.drawHitbox(g);
 //				c.drawAttackBox(g, xLvlOffset);
