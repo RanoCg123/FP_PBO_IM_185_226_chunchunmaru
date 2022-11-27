@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
+import entities.EnemyManager;
 import entities.Player;
 import levels.LevelManager;
 import main.Game;
@@ -13,7 +14,6 @@ import utilz.LoadSave;
 public class Playing extends State implements Statemethods {
 	private Player player;
 	private LevelManager levelManager;
-
 	private BufferedImage backgroundImg;
 
 	private int xLvlOffset;
