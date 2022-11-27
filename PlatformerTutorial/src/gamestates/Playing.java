@@ -15,7 +15,7 @@ public class Playing extends State implements Statemethods {
 	private Player player;
 	private LevelManager levelManager;
 	private BufferedImage backgroundImg;
-
+	private EnemyManager enemyManager;
 	private int xLvlOffset;
 	private int leftBorder = (int) (0.25 * Game.GAME_WIDTH);
 	private int rightBorder = (int) (0.75 * game.GAME_WIDTH);
@@ -32,6 +32,7 @@ public class Playing extends State implements Statemethods {
 
 	private void initClasses() {
 		levelManager = new LevelManager(game);
+		enemyManager = new EnemyManager(this);
 		player = new Player(200, 200, (int) (64 * Game.SCALE), (int) (40 * Game.SCALE));
 		player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
 
@@ -41,6 +42,7 @@ public class Playing extends State implements Statemethods {
 	public void update() {
 		levelManager.update();
 		player.update();
+		enemyManager.update();
 		checkBorder();
 	}
 
@@ -66,7 +68,7 @@ public class Playing extends State implements Statemethods {
 		g.drawImage(backgroundImg, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
 		levelManager.draw(g, xLvlOffset);
 		player.render(g, xLvlOffset);
-
+		enemyManager.draw(g);
 	}
 
 	@Override
