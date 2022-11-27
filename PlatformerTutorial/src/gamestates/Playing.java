@@ -13,13 +13,20 @@ import utilz.LoadSave;
 public class Playing extends State implements Statemethods {
 	private Player player;
 	private LevelManager levelManager;
-	
+
 	private BufferedImage backgroundImg;
+
+	private int xLvlOffset;
+	private int leftBorder = (int) (0.25 * Game.GAME_WIDTH);
+	private int rightBorder = (int) (0.75 * game.GAME_WIDTH);
+	private int lvlTilesWide = LoadSave.GetLevelData()[0].length;
+	private int maxTilesOffset = lvlTilesWide - Game.TILES_IN_WIDTH;
+	private int maxLvlOffsetX = maxTilesOffset * Game.TILES_SIZE;
 
 	public Playing(Game game) {
 		super(game);
 		initClasses();
-		
+
 		backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.PLAYING_BACKGROUND);
 	}
 
@@ -34,14 +41,31 @@ public class Playing extends State implements Statemethods {
 	public void update() {
 		levelManager.update();
 		player.update();
-
+		checkBorder();
 	}
+
+	private void checkBorder() {
+		int playerX = (int) player.getHitbox().x;
+		int diff = playerX - xLvlOffset;
+		if (diff > rightBorder) {
+			xLvlOffset += diff - rightBorder;
+		} else if (diff < leftBorder) {
+			xLvlOffset += diff - leftBorder;
+		}
+
+		if (xLvlOffset > maxLvlOffsetX) {
+			xLvlOffset = maxLvlOffsetX;
+		} else if (xLvlOffset < 0) {
+			xLvlOffset = 0;
+		}
+	}
+
 
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(backgroundImg, 0,0,Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
-		levelManager.draw(g);
-		player.render(g);
+		g.drawImage(backgroundImg, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
+		levelManager.draw(g, xLvlOffset);
+		player.render(g, xLvlOffset);
 
 	}
 
