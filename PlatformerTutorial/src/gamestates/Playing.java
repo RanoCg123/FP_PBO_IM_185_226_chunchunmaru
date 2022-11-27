@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
+import entities.EnemyManager;
 import entities.Player;
 import levels.LevelManager;
 import main.Game;
@@ -13,7 +14,7 @@ import utilz.LoadSave;
 public class Playing extends State implements Statemethods {
 	private Player player;
 	private LevelManager levelManager;
-	
+	private EnemyManager enemyManager;
 	private BufferedImage backgroundImg;
 
 	public Playing(Game game) {
@@ -25,6 +26,7 @@ public class Playing extends State implements Statemethods {
 
 	private void initClasses() {
 		levelManager = new LevelManager(game);
+		enemyManager= new EnemyManager(this);
 		player = new Player(200, 200, (int) (64 * Game.SCALE), (int) (40 * Game.SCALE));
 		player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
 
@@ -34,7 +36,7 @@ public class Playing extends State implements Statemethods {
 	public void update() {
 		levelManager.update();
 		player.update();
-
+		enemyManager.update();
 	}
 
 	@Override
@@ -42,7 +44,7 @@ public class Playing extends State implements Statemethods {
 		g.drawImage(backgroundImg, 0,0,Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
 		levelManager.draw(g);
 		player.render(g);
-
+		enemyManager.draw(g);
 	}
 
 	@Override
