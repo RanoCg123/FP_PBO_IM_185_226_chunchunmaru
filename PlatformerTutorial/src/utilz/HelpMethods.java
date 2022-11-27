@@ -25,7 +25,7 @@ public class HelpMethods {
 
 		int value = lvlData[(int) yIndex][(int) xIndex];
 
-		if (value >= 48 || value < 0 || value != 11)
+		if (value >= 60 || value < 0 || value != 11 && value != 48)
 			return true;
 		return false;
 	}
