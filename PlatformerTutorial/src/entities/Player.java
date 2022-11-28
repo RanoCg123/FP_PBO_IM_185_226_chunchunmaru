@@ -140,7 +140,7 @@ public class Player extends Entity {
 	}
 
 	private void jump() {
-		if (inAir&&!doublejump&&djcount>=2)
+		if ((inAir&&!doublejump)||djcount>2)
 			return;
 		
 		inAir=true;
