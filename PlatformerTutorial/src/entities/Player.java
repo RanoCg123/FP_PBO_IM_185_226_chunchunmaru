@@ -114,6 +114,8 @@ public class Player extends Entity {
 				if(jumplimit>40) {
 					doublejump=false;
 					jumplimit=0;
+				}if(djcount>2) {
+					doublejump=false;
 				}
 			} else {
 				hitbox.y = GetEntityYPosUnderRoofOrAboveFloor(hitbox, airSpeed);
@@ -138,11 +140,9 @@ public class Player extends Entity {
 	}
 
 	private void jump() {
-		if (inAir&&!doublejump)
+		if (inAir&&!doublejump&&djcount>=2)
 			return;
-		if(djcount>=2) {
-			doublejump=false;
-		}
+		
 		inAir=true;
 		airSpeed=jumpSpeed;
 		doublejump=true;
