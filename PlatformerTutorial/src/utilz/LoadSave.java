@@ -20,6 +20,7 @@ public class LoadSave {
 	public static final String PLAYING_BACKGROUND = "wallpaper.png";
 	public static final String MAIN_MENU_BACKGROUND = "main_menu_background.png";
 	public static final String MAIN_MENU_LOGO = "menu_logo.png";
+	public static final String ROBOT_ATLAS = "junkyard_robot.png";
 
 	public static BufferedImage GetSpriteAtlas(String fileName) {
 		BufferedImage img = null;

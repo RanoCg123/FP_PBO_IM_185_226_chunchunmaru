@@ -35,16 +35,19 @@ public class EnemyManager {
 
 	private void drawRobots(Graphics g, int xLvlOffset) {
 		for (Robot c : robots)
-			{	g.setColor(Color.BLACK);
-				g.fillRect((int) c.getHitbox().x - xLvlOffset, (int) c.getHitbox().y,ROBOT_WIDTH , ROBOT_HEIGHT);
-				g.setColor(Color.BLACK);
-				g.drawRect((int) c.getHitbox().x - xLvlOffset, (int) c.getHitbox().y,ROBOT_WIDTH , ROBOT_HEIGHT);
+				g.drawImage(RobotArr[c.getEnemyState()][c.getAniIndex()], (int) c.getHitbox().x - xLvlOffset - ROBOT_DRAWOFFSET_X , (int) c.getHitbox().y - ROBOT_DRAWOFFSET_Y,
+						ROBOT_WIDTH , ROBOT_HEIGHT, null);
 //				c.drawHitbox(g);
 //				c.drawAttackBox(g, xLvlOffset);
 
-			}
 
 	}
 
-	private void loadEnemyImgs() {}
+	private void loadEnemyImgs() {
+		RobotArr = new BufferedImage[1][1];
+		BufferedImage temp = LoadSave.GetSpriteAtlas(LoadSave.ROBOT_ATLAS);
+		for (int j = 0; j < RobotArr.length; j++)
+			for (int i = 0; i < RobotArr[j].length; i++)
+				RobotArr[j][i] = temp.getSubimage(i * ROBOT_WIDTH_DEFAULT, j * ROBOT_HEIGHT_DEFAULT, ROBOT_WIDTH_DEFAULT, ROBOT_HEIGHT_DEFAULT);
+	}
 }
