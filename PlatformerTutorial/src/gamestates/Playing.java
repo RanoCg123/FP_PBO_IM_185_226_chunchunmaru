@@ -1,5 +1,6 @@
 package gamestates;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -33,7 +34,7 @@ public class Playing extends State implements Statemethods {
 	private void initClasses() {
 		levelManager = new LevelManager(game);
 		enemyManager = new EnemyManager(this);
-		player = new Player(200, 200, (int) (64 * Game.SCALE), (int) (40 * Game.SCALE));
+		player = new Player(200, 500, (int) (64 * Game.SCALE), (int) (40 * Game.SCALE));
 		player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
 
 	}
@@ -62,11 +63,14 @@ public class Playing extends State implements Statemethods {
 		}
 	}
 
-
 	@Override
 	public void draw(Graphics g) {
 		g.drawImage(backgroundImg, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
+
+		g.setColor(new Color(0, 0, 0, 40));
+		g.fillRect(0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT);
 		levelManager.draw(g, xLvlOffset);
+
 		player.render(g, xLvlOffset);
 		enemyManager.draw(g, xLvlOffset);
 	}
