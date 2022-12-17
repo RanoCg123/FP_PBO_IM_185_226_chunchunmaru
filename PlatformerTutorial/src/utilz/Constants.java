@@ -12,14 +12,14 @@ public class Constants {
 		public static final int HIT = 3;
 		public static final int DEAD = 4;
 
-		public static final int ROBOT_WIDTH_DEFAULT = 48;
-		public static final int ROBOT_HEIGHT_DEFAULT = 48;
+		public static final int ROBOT_WIDTH_DEFAULT = 40;
+		public static final int ROBOT_HEIGHT_DEFAULT = 32;
 
 		public static final int ROBOT_WIDTH = (int) (ROBOT_WIDTH_DEFAULT * Game.SCALE);
 		public static final int ROBOT_HEIGHT = (int) (ROBOT_HEIGHT_DEFAULT * Game.SCALE);
 
-		public static final int ROBOT_DRAWOFFSET_X = (int) (10 * Game.SCALE);
-		public static final int ROBOT_DRAWOFFSET_Y = (int) (3* Game.SCALE);
+		public static final int ROBOT_DRAWOFFSET_X = (int) (15 * Game.SCALE);
+		public static final int ROBOT_DRAWOFFSET_Y = (int) (4* Game.SCALE);
 
 		public static int GetSpriteAmount(int enemy_type, int enemy_state) {
 

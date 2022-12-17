@@ -42,7 +42,7 @@ public class Playing extends State implements Statemethods {
 	public void update() {
 		levelManager.update();
 		player.update();
-		enemyManager.update();
+		enemyManager.update(levelManager.getCurrentLevel().getLevelData(), getPlayer());
 		checkBorder();
 	}
 
