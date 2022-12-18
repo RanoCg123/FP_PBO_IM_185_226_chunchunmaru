@@ -10,6 +10,7 @@ import entities.EnemyManager;
 import entities.Player;
 import levels.LevelManager;
 import main.Game;
+import ui.PauseMenu;
 import utilz.LoadSave;
 
 public class Playing extends State implements Statemethods {
@@ -17,6 +18,9 @@ public class Playing extends State implements Statemethods {
 	private LevelManager levelManager;
 	private BufferedImage backgroundImg;
 	private EnemyManager enemyManager;
+	private PauseMenu pauseMenu;
+	private boolean paused = false;
+
 	private int xLvlOffset;
 	private int leftBorder = (int) (0.25 * Game.GAME_WIDTH);
 	private int rightBorder = (int) (0.75 * game.GAME_WIDTH);
@@ -27,7 +31,6 @@ public class Playing extends State implements Statemethods {
 	public Playing(Game game) {
 		super(game);
 		initClasses();
-
 		backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.PLAYING_BACKGROUND);
 	}
 
@@ -36,15 +39,19 @@ public class Playing extends State implements Statemethods {
 		enemyManager = new EnemyManager(this);
 		player = new Player(200, 500, (int) (64 * Game.SCALE), (int) (40 * Game.SCALE));
 		player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
-
+		pauseMenu = new PauseMenu(this);
 	}
 
 	@Override
 	public void update() {
-		levelManager.update();
-		player.update();
-		enemyManager.update();
-		checkBorder();
+		if (!paused) {
+			levelManager.update();
+			enemyManager.update();
+			checkBorder();
+			player.update();
+		} else {
+			pauseMenu.update();
+		}
 	}
 
 	private void checkBorder() {
@@ -66,13 +73,14 @@ public class Playing extends State implements Statemethods {
 	@Override
 	public void draw(Graphics g) {
 		g.drawImage(backgroundImg, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
-
 		g.setColor(new Color(0, 0, 0, 40));
 		g.fillRect(0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT);
 		levelManager.draw(g, xLvlOffset);
-
 		player.render(g, xLvlOffset);
 		enemyManager.draw(g, xLvlOffset);
+
+		if (paused)
+			pauseMenu.draw(g);
 	}
 
 	@Override
@@ -97,6 +105,9 @@ public class Playing extends State implements Statemethods {
 		case KeyEvent.VK_BACK_SPACE:
 			Gamestate.state = Gamestate.MENU;
 			break;
+		case KeyEvent.VK_ESCAPE:
+			paused = !paused;
+			break;
 		}
 	}
 
@@ -116,22 +127,32 @@ public class Playing extends State implements Statemethods {
 
 	}
 
+	public void mouseDragged(MouseEvent e) {
+	}
+
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
+		if (paused)
+			pauseMenu.mousePressed(e);
 
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
+		if (paused)
+			pauseMenu.mouseReleased(e);
 
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
+		if (paused)
+			pauseMenu.mouseMoved(e);
 
+	}
+
+	public void unpauseGame() {
+		paused = false;
 	}
 
 	public void windowFocusLost() {
