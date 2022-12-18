@@ -44,9 +44,7 @@ public abstract class Enemy extends Entity {
 				case DEAD -> active = false;
 				}
 			}
-
 		}
-
 	}
 
 	protected void updateInAir(int[][] lvlData) {
@@ -82,7 +80,6 @@ public abstract class Enemy extends Entity {
 				if (IsSightClear(lvlData, hitbox, player.hitbox, tileY))
 					return true;
 			}
-
 		return false;
 	}
 	
