@@ -35,8 +35,8 @@ public class EnemyManager {
 
 	private void drawRobots(Graphics g, int xLvlOffset) {
 		for (Robot c : robots)
-				g.drawImage(RobotArr[c.getEnemyState()][c.getAniIndex()], (int) c.getHitbox().x - xLvlOffset - ROBOT_DRAWOFFSET_X , (int) c.getHitbox().y,
-						(int)(64 * 1.8), (int)(40 * 1.8), null);
+				g.drawImage(RobotArr[c.getEnemyState()][c.getAniIndex()], (int) c.getHitbox().x - xLvlOffset - ROBOT_DRAWOFFSET_X , (int) c.getHitbox().y - 10,
+						(int)(64 * 2), (int)(40 * 2), null);
 //				c.drawHitbox(g,xLvlOffset);
 //				c.drawAttackBox(g, xLvlOffset);
 

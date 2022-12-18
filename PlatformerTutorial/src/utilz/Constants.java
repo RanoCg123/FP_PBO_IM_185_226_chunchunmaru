@@ -27,15 +27,15 @@ public class Constants {
 			case ROBOT:
 				switch (enemy_state) {
 				case IDLE:
-					return 9;
+					return 3;
 				case RUNNING:
-					return 6;
+					return 3;
 				case ATTACK:
-					return 7;
+					return 3;
 				case HIT:
-					return 4;
+					return 3;
 				case DEAD:
-					return 5;
+					return 3;
 				}
 			}
 
