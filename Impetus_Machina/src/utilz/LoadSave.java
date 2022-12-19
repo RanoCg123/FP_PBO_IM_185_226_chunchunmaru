@@ -30,10 +30,6 @@ public class LoadSave {
 	public static final String HEALTH_BAR = "Healthbar.png";
 	public static final String SPIKE_TRAP = "spike_trap.png";
 	public static final String STAGE_TWO_BACKGROUND = "stage_two.png";
-	public static final String DROPS = "drops_sprite.png";
-	public static final String G_COUNTER = "gear_counter.png";
-	public static final String M_BOXES = "metalstuff_sprite.png";
-	public static final String W_BOXES = "woodstuff_sprites.png";
 	public static BufferedImage GetSpriteAtlas(String fileName) {
 		BufferedImage img = null;
 		InputStream is = LoadSave.class.getResourceAsStream("/" + fileName);
