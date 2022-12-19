@@ -79,8 +79,11 @@ public class Playing extends State implements Statemethods {
 		player.render(g, xLvlOffset);
 		enemyManager.draw(g, xLvlOffset);
 
-		if (paused)
+		if (paused) {
+			g.setColor(new Color(0, 0, 0, 100));
+			g.fillRect(0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT);
 			pauseMenu.draw(g);
+		}
 	}
 
 	@Override
