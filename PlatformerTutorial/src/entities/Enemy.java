@@ -3,6 +3,7 @@ import static utilz.Constants.Directions.*;
 import static utilz.Constants.EnemyConstants.*;
 import static utilz.HelpMethods.*;
 
+import java.awt.geom.Rectangle2D;
 
 import main.Game;
 
@@ -48,7 +49,13 @@ public abstract class Enemy extends Entity {
 			}
 		}
 	}
-
+	public void hurt(int amount) {
+		currentHealth -= amount;
+		if (currentHealth <= 0)
+			newState(DEAD);
+		else
+			newState(HIT);
+	}
 	protected void updateInAir(int[][] lvlData) {
 		if (CanMoveHere(hitbox.x, hitbox.y + fallSpeed, hitbox.width, hitbox.height, lvlData)) {
 			hitbox.y += fallSpeed;
@@ -92,7 +99,12 @@ public abstract class Enemy extends Entity {
 
 		return false;
 	}
+	protected void checkPlayerHit(Rectangle2D.Float attackBox, Player player) {
+		if (attackBox.intersects(player.hitbox))
+			player.changeHealth(-GetEnemyDmg(enemytype));
+		attackChecked = true;
 
+	}
 	protected boolean isPlayerInRange(Player player) {
 		int absValue = (int) Math.abs(player.hitbox.x - hitbox.x);
 		return absValue <= attackDistance * 5;
@@ -109,6 +121,15 @@ public abstract class Enemy extends Entity {
 		else
 			walkDir = LEFT;
 
+	}
+	public void resetEnemy() {
+		hitbox.x = x;
+		hitbox.y = y;
+		firstUpdate = true;
+		currentHealth = maxHealth;
+		newState(IDLE);
+		active = true;
+		fallSpeed = 0;
 	}
 	protected void newState(int enemyState) {
 		this.enemyState = enemyState;
@@ -127,5 +148,7 @@ public abstract class Enemy extends Entity {
 	public void setAniIndex(int aniIndex) {
 		this.aniIndex = aniIndex;
 	}
-
+	public boolean isActive() {
+		return active;
+	}
 }
