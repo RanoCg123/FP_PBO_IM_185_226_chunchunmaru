@@ -21,6 +21,7 @@ public class EnemyManager {
 		loadEnemyImgs();
 		addEnemies();
 	}
+	
 	private void addEnemies() {
 		robots = LoadSave.GetRobots();
 	}
@@ -31,6 +32,8 @@ public class EnemyManager {
 	
 	public void draw(Graphics g, int xLvlOffset) {
 		drawRobots(g, xLvlOffset);
+		for (Robot a : robots)
+			a.drawHitbox(g, xLvlOffset);
 	}
 
 	private void drawRobots(Graphics g, int xLvlOffset) {
@@ -45,7 +48,7 @@ public class EnemyManager {
 
 	private void loadEnemyImgs() {
 		BufferedImage temp = LoadSave.GetSpriteAtlas(LoadSave.ROBOT_ATLAS);
-		RobotArr = new BufferedImage[5][9];
+		RobotArr = new BufferedImage[5][5];
 		for (int j = 0; j < RobotArr.length; j++)
 			for (int i = 0; i < RobotArr[j].length; i++)
 				RobotArr[j][i] = temp.getSubimage(i * 64, j * 40, 64, 40);

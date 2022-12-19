@@ -23,7 +23,7 @@ public class LoadSave {
 	public static final String ROBOT_ATLAS = "junkyard_robot.png";
 	public static final String PAUSE_MENU_BACKGROUND = "pause_menu_background.png";
 	public static final String PAUSE_BUTTONS = "pause_buttons.png";
-	
+	public static final String HEALTH_BAR = "Healthbar.png";
 
 	public static BufferedImage GetSpriteAtlas(String fileName) {
 		BufferedImage img = null;

@@ -14,10 +14,10 @@ public class Robot extends Enemy{
 		initHitbox(x, y, (int)(16*Game.SCALE), (int)(24*Game.SCALE));
 	}
 	public void update (int[][]lvldata, Player player) {
-		updateAnimationTick();
 		updatemove(lvldata, player);
+		updateAnimationTick();
+		
 	}
-	
 	private void updatemove(int[][] lvlData, Player player) {
 		if (firstUpdate)
 			firstUpdateCheck(lvlData);

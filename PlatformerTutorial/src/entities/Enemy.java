@@ -26,6 +26,8 @@ public abstract class Enemy extends Entity {
 		super(x, y, width, height);
 		this.enemytype=enemytype;
 		initHitbox(x, y, width, height);
+		maxHealth = GetMaxHealth(enemytype);
+		currentHealth = maxHealth;
 	}
 	protected void firstUpdateCheck(int[][] lvlData) {
 		if (!IsEntityOnFloor(hitbox, lvlData))
@@ -73,6 +75,13 @@ public abstract class Enemy extends Entity {
 		changeWalkDir();
 	}
 	
+	protected void turnTowardsPlayer(Player player) {
+		if (player.hitbox.x > hitbox.x)
+			walkDir = RIGHT;
+		else
+			walkDir = LEFT;
+	}
+
 	protected boolean canSeePlayer(int[][] lvlData, Player player) {
 		int playerTileY = (int) (player.getHitbox().y / Game.TILES_SIZE);
 		if (playerTileY == tileY)
@@ -80,21 +89,18 @@ public abstract class Enemy extends Entity {
 				if (IsSightClear(lvlData, hitbox, player.hitbox, tileY))
 					return true;
 			}
+
 		return false;
 	}
-	
+
 	protected boolean isPlayerInRange(Player player) {
 		int absValue = (int) Math.abs(player.hitbox.x - hitbox.x);
 		return absValue <= attackDistance * 5;
 	}
-	protected void turnTowardsPlayer(Player player) {
-		if (player.hitbox.x > hitbox.x)
-			walkDir = RIGHT;
-		else
-			walkDir = LEFT;
-	}
+
 	protected boolean isPlayerCloseForAttack(Player player) {
 		int absValue = (int) Math.abs(player.hitbox.x - hitbox.x);
+		
 		return absValue <= attackDistance;
 	}
 	protected void changeWalkDir() {

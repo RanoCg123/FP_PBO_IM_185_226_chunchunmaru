@@ -46,7 +46,7 @@ public class Constants {
 		public static int GetMaxHealth(int enemy_type) {
 			switch (enemy_type) {
 			case ROBOT:
-				return 10;
+				return 5;
 			default:
 				return 1;
 			}
@@ -55,7 +55,7 @@ public class Constants {
 		public static int GetEnemyDmg(int enemy_type) {
 			switch (enemy_type) {
 			case ROBOT:
-				return 15;
+				return 2;
 			default:
 				return 0;
 			}

@@ -14,7 +14,6 @@ public class HelpMethods {
 						return true;
 		return false;
 	}
-
 	private static boolean IsSolid(float x, float y, int[][] lvlData) {
 		int maxWidth = lvlData[0].length * Game.TILES_SIZE;
 		if (x < 0 || x >= maxWidth)
@@ -26,7 +25,6 @@ public class HelpMethods {
 
 		return IsTileSolid((int) xIndex, (int) yIndex, lvlData);
 	}
-
 	public static boolean IsTileSolid(int xTile, int yTile, int[][] lvlData) {
 		int value = lvlData[yTile][xTile];
 
@@ -34,7 +32,6 @@ public class HelpMethods {
 			return true;
 		return false;
 	}
-
 	public static float GetEntityXPosNextToWall(Rectangle2D.Float hitbox, float xSpeed) {
 		int currentTile = (int) (hitbox.x / Game.TILES_SIZE);
 		if (xSpeed > 0) {
@@ -69,17 +66,21 @@ public class HelpMethods {
 		return true;
 
 	}
+	public static boolean IsAllTilesClear(int xStart, int xEnd, int y, int[][] lvlData) {
+		for (int i = 0; i < xEnd - xStart; i++)
+			if (IsTileSolid(xStart + i, y, lvlData))
+				return false;
+		return true;
+	}
 	public static boolean IsFloor(Rectangle2D.Float hitbox, float xSpeed, int[][] lvlData) {
 		return IsSolid(hitbox.x + xSpeed, hitbox.y + hitbox.height + 1, lvlData);
 	}
 	public static boolean IsAllTilesWalkable(int xStart, int xEnd, int y, int[][] lvlData) {
-		for (int i = 0; i < xEnd - xStart; i++) {
-			if (IsTileSolid(xStart + i, y, lvlData))
-				return false;
-			if (!IsTileSolid(xStart + i, y + 1, lvlData))
-				return false;
-		}
-
+		if (IsAllTilesClear(xStart, xEnd, y, lvlData))
+			for (int i = 0; i < xEnd - xStart; i++) {
+				if (!IsTileSolid(xStart + i, y + 1, lvlData))
+					return false;
+			}
 		return true;
 	}
 
@@ -91,6 +92,5 @@ public class HelpMethods {
 			return IsAllTilesWalkable(secondXTile, firstXTile, yTile, lvlData);
 		else
 			return IsAllTilesWalkable(firstXTile, secondXTile, yTile, lvlData);
-
 	}
 }
