@@ -106,7 +106,7 @@ public class Playing extends State implements Statemethods {
 			player.jcount();
 			break;
 		case KeyEvent.VK_BACK_SPACE:
-			Gamestate.state = Gamestate.MENU;
+			paused = !paused;;
 			break;
 		case KeyEvent.VK_ESCAPE:
 			paused = !paused;
