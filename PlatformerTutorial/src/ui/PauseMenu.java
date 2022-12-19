@@ -73,8 +73,11 @@ public class PauseMenu {
 				playing.unpauseGame();
 			}
 		} else if (isIn(e, replayB)) {
-			if (replayB.isMousePressed())
+			if (replayB.isMousePressed()) {
 				System.out.println("replay lvl!");
+//				playing.resetAll();
+				playing.unpauseGame();
+			}
 		} else if (isIn(e, unpauseB)) {
 			if (unpauseB.isMousePressed())
 				playing.unpauseGame();

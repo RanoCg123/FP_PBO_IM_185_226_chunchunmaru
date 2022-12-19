@@ -12,7 +12,7 @@ public class Constants {
 		public static final int HIT = 3;
 		public static final int DEAD = 4;
 
-		public static final int ROBOT_WIDTH_DEFAULT = 40;
+		public static final int ROBOT_WIDTH_DEFAULT = 64;
 		public static final int ROBOT_HEIGHT_DEFAULT = 40;
 
 		public static final int ROBOT_WIDTH = (int) (ROBOT_WIDTH_DEFAULT * Game.SCALE);
