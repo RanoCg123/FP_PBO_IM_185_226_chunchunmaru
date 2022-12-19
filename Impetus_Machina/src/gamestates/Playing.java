@@ -48,7 +48,7 @@ public class Playing extends State implements Statemethods {
 	public void loadNextLevel() {
 		resetAll();
 		levelManager.loadNextLevel();
-//		player.setSpawn(levelManager.getCurrentLevel().getPlayerSpawn());
+		backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.MAIN_MENU_BACKGROUND);
 	}
 
 	private void loadStartLevel() {
