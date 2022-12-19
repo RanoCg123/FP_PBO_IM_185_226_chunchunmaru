@@ -29,6 +29,7 @@ public class LoadSave {
 	public static final String PAUSE_BUTTONS = "pause_buttons.png";
 	public static final String HEALTH_BAR = "Healthbar.png";
 	public static final String SPIKE_TRAP = "spike_trap.png";
+	public static final String STAGE_TWO_BACKGROUND = "stage_two.png";
 
 	public static BufferedImage GetSpriteAtlas(String fileName) {
 		BufferedImage img = null;
