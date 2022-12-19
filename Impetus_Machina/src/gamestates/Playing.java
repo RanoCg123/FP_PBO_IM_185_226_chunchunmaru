@@ -44,11 +44,16 @@ public class Playing extends State implements Statemethods {
 	public void setMaxLvlOffset(int lvlOffset) {
 		this.maxLvlOffsetX = lvlOffset;
 	}
-	
+
 	public void loadNextLevel() {
 		resetAll();
 		levelManager.loadNextLevel();
-		backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.STAGE_TWO_BACKGROUND);
+		lvlCompleted++;
+		if (lvlCompleted % 2 == 1) {
+			backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.STAGE_TWO_BACKGROUND);
+		} else {
+			backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.PLAYING_BACKGROUND);
+		}
 	}
 
 	private void loadStartLevel() {
@@ -138,7 +143,6 @@ public class Playing extends State implements Statemethods {
 				break;
 			case KeyEvent.VK_BACK_SPACE:
 				paused = !paused;
-				;
 				break;
 			case KeyEvent.VK_ESCAPE:
 				paused = !paused;

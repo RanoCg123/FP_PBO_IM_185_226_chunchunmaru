@@ -20,6 +20,7 @@ public class HelpMethods {
 						return true;
 		return false;
 	}
+
 	private static boolean IsSolid(float x, float y, int[][] lvlData) {
 		int maxWidth = lvlData[0].length * Game.TILES_SIZE;
 		if (x < 0 || x >= maxWidth)
@@ -31,13 +32,16 @@ public class HelpMethods {
 
 		return IsTileSolid((int) xIndex, (int) yIndex, lvlData);
 	}
+
 	public static boolean IsTileSolid(int xTile, int yTile, int[][] lvlData) {
 		int value = lvlData[yTile][xTile];
 
-		if (value >= 60 || value < 0 || value != 11 && value != 48 && value != 49 && value != 50)
+		if (value >= 60 || value < 0
+				|| value != 11 && value != 23 && value != 48 && value != 49 && value != 50 && value != 51)
 			return true;
 		return false;
 	}
+
 	public static float GetEntityXPosNextToWall(Rectangle2D.Float hitbox, float xSpeed) {
 		int currentTile = (int) (hitbox.x / Game.TILES_SIZE);
 		if (xSpeed > 0) {
@@ -71,15 +75,21 @@ public class HelpMethods {
 		return true;
 
 	}
+
 	public static boolean IsAllTilesClear(int xStart, int xEnd, int y, int[][] lvlData) {
 		for (int i = 0; i < xEnd - xStart; i++)
 			if (IsTileSolid(xStart + i, y, lvlData))
 				return false;
 		return true;
 	}
+
 	public static boolean IsFloor(Rectangle2D.Float hitbox, float xSpeed, int[][] lvlData) {
+		if (xSpeed > 0) {
+			return IsSolid(hitbox.x + hitbox.width, hitbox.y + hitbox.height + 1, lvlData);
+		}
 		return IsSolid(hitbox.x + xSpeed, hitbox.y + hitbox.height + 1, lvlData);
 	}
+
 	public static boolean IsAllTilesWalkable(int xStart, int xEnd, int y, int[][] lvlData) {
 		if (IsAllTilesClear(xStart, xEnd, y, lvlData))
 			for (int i = 0; i < xEnd - xStart; i++) {
@@ -89,7 +99,8 @@ public class HelpMethods {
 		return true;
 	}
 
-	public static boolean IsSightClear(int[][] lvlData, Rectangle2D.Float firstHitbox, Rectangle2D.Float secondHitbox, int yTile) {
+	public static boolean IsSightClear(int[][] lvlData, Rectangle2D.Float firstHitbox, Rectangle2D.Float secondHitbox,
+			int yTile) {
 		int firstXTile = (int) (firstHitbox.x / Game.TILES_SIZE);
 		int secondXTile = (int) (secondHitbox.x / Game.TILES_SIZE);
 
@@ -98,7 +109,7 @@ public class HelpMethods {
 		else
 			return IsAllTilesWalkable(firstXTile, secondXTile, yTile, lvlData);
 	}
-	
+
 	public static int[][] GetLevelData(BufferedImage img) {
 		int[][] lvlData = new int[img.getHeight()][img.getWidth()];
 
@@ -112,8 +123,7 @@ public class HelpMethods {
 			}
 		return lvlData;
 	}
-	
-	
+
 	public static ArrayList<Robot> GetRobots(BufferedImage img) {
 		ArrayList<Robot> list = new ArrayList<Robot>();
 		for (int j = 0; j < img.getHeight(); j++)
@@ -138,5 +148,5 @@ public class HelpMethods {
 //			}
 //		return list;
 //	}
-	
+
 }
