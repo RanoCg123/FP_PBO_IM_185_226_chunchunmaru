@@ -1,7 +1,13 @@
 package utilz;
 
-import java.awt.geom.Rectangle2D;
+import static utilz.Constants.EnemyConstants.ROBOT;
 
+import java.awt.Color;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
+import entities.Robot;
 import main.Game;
 
 public class HelpMethods {
@@ -62,7 +68,6 @@ public class HelpMethods {
 		if (!IsSolid(hitbox.x, hitbox.y + hitbox.height + 1, lvlData))
 			if (!IsSolid(hitbox.x + hitbox.width, hitbox.y + hitbox.height + 1, lvlData))
 				return false;
-
 		return true;
 
 	}
@@ -93,4 +98,45 @@ public class HelpMethods {
 		else
 			return IsAllTilesWalkable(firstXTile, secondXTile, yTile, lvlData);
 	}
+	
+	public static int[][] GetLevelData(BufferedImage img) {
+		int[][] lvlData = new int[img.getHeight()][img.getWidth()];
+
+		for (int j = 0; j < img.getHeight(); j++)
+			for (int i = 0; i < img.getWidth(); i++) {
+				Color color = new Color(img.getRGB(i, j));
+				int value = color.getRed();
+				if (value >= 60)
+					value = 0;
+				lvlData[j][i] = value;
+			}
+		return lvlData;
+	}
+	
+	
+	public static ArrayList<Robot> GetRobots(BufferedImage img) {
+		ArrayList<Robot> list = new ArrayList<Robot>();
+		for (int j = 0; j < img.getHeight(); j++)
+			for (int i = 0; i < img.getWidth(); i++) {
+				Color color = new Color(img.getRGB(i, j));
+				int value = color.getGreen();
+				if (value == ROBOT)
+					list.add(new Robot(i * Game.TILES_SIZE, j * Game.TILES_SIZE));
+			}
+		return list;
+	}
+//
+//	public static ArrayList<Spike> GetSpikes() {
+//		BufferedImage img = GetSpriteAtlas(LEVEL_ONE_DATA);
+//		ArrayList<Spike> list = new ArrayList<Spike>();
+//		for (int j = 0; j < img.getHeight(); j++)
+//			for (int i = 0; i < img.getWidth(); i++) {
+//				Color color = new Color(img.getRGB(i, j));
+//				int value = color.getBlue();
+//				if (value == SPIKE)
+//					list.add(new Spike(i * Game.TILES_SIZE, j * Game.TILES_SIZE, SPIKE));
+//			}
+//		return list;
+//	}
+	
 }

@@ -14,10 +14,8 @@ public class Constants {
 
 		public static final int ROBOT_WIDTH_DEFAULT = 64;
 		public static final int ROBOT_HEIGHT_DEFAULT = 40;
-
 		public static final int ROBOT_WIDTH = (int) (ROBOT_WIDTH_DEFAULT * Game.SCALE);
 		public static final int ROBOT_HEIGHT = (int) (ROBOT_HEIGHT_DEFAULT * Game.SCALE);
-
 		public static final int ROBOT_DRAWOFFSET_X = (int) (15 * Game.SCALE);
 		public static final int ROBOT_DRAWOFFSET_Y = (int) (4* Game.SCALE);
 
@@ -43,6 +41,11 @@ public class Constants {
 
 		}
 
+		public static final float GRAVITY = 0.04f * Game.SCALE;
+		public static final int ANI_SPEED = 25;
+
+
+			
 		public static int GetMaxHealth(int enemy_type) {
 			switch (enemy_type) {
 			case ROBOT:
@@ -64,6 +67,20 @@ public class Constants {
 
 	}
 
+	public static class ObjectConstants {
+		public static final int SPIKE = 0;
+
+		public static final int CONTAINER_WIDTH_DEFAULT = 40;
+		public static final int CONTAINER_HEIGHT_DEFAULT = 30;
+		public static final int CONTAINER_WIDTH = (int) (Game.SCALE * CONTAINER_WIDTH_DEFAULT);
+		public static final int CONTAINER_HEIGHT = (int) (Game.SCALE * CONTAINER_HEIGHT_DEFAULT);
+
+		public static final int SPIKE_WIDTH_DEFAULT = 32;
+		public static final int SPIKE_HEIGHT_DEFAULT = 32;
+		public static final int SPIKE_WIDTH = (int) (Game.SCALE * SPIKE_WIDTH_DEFAULT);
+		public static final int SPIKE_HEIGHT = (int) (Game.SCALE * SPIKE_HEIGHT_DEFAULT);
+	}
+	
 	public static class UI {
 		public static class Buttons {
 			public static final int B_WIDTH_DEFAULT = 176;
