@@ -4,6 +4,7 @@ import static utilz.Constants.PlayerConstants.*;
 import static utilz.HelpMethods.*;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -57,7 +58,14 @@ public class Player extends Entity {
 
 	private boolean attackChecked;
 	private Playing playing;
-
+	
+	private BufferedImage gcimage;
+	private int gCountWidth = (int) (120 * Game.SCALE);
+	private int gCountHeight = (int) (64 * Game.SCALE);
+	private int gCountX = (int) (640 * Game.SCALE);
+	private int gCountY = (int) (10 * Game.SCALE);
+	private int gears=000;
+	private String gcount;
 	public Player(float x, float y, int width, int height, Playing playing) {
 		super(x, y, width, height);
 		this.playing = playing;
@@ -72,7 +80,7 @@ public class Player extends Entity {
 
 	public void update() {
 		updateHealthBar();
-
+		updateGearCount();
 		if (currentHealth <= 0) {
 			playing.setGameOver(true);
 			return;
@@ -94,7 +102,9 @@ public class Player extends Entity {
 		playing.checkEnemyHit(attackBox);
 
 	}
-
+	private void updateGearCount() {
+		gcount = (" "+gears);
+	}
 	private void updateHealthBar() {
 		healthWidth = (int) ((currentHealth / (float) maxHealth) * healthBarWidth);
 	}
@@ -236,7 +246,9 @@ public class Player extends Entity {
 		else if (currentHealth >= maxHealth)
 			currentHealth = maxHealth;
 	}
-
+	public void changegear(int value) {
+		gears = gears + value;
+	}
 	private void resetdoublejump() {
 		djcount = 0;
 		doublejump = false;
@@ -276,6 +288,7 @@ public class Player extends Entity {
 			for (int i = 0; i < animations[j].length; i++)
 				animations[j][i] = img.getSubimage(i * 64, j * 40, 64, 40);
 		statusBarImg = LoadSave.GetSpriteAtlas(LoadSave.HEALTH_BAR);
+		gcimage = LoadSave.GetSpriteAtlas(LoadSave.G_COUNTER);
 
 	}
 
@@ -283,6 +296,10 @@ public class Player extends Entity {
 		g.drawImage(statusBarImg, statusBarX, statusBarY, statusBarWidth, statusBarHeight, null);
 		g.setColor(Color.red);
 		g.fillRect(healthBarXStart + statusBarX, healthBarYStart + statusBarY, healthWidth, healthBarHeight);
+		g.drawImage(gcimage, gCountX, gCountY, gCountWidth, gCountHeight, null);
+		g.setColor(Color.black);
+		g.setFont(new Font("TimesRoman", Font.PLAIN, 40)); 
+		g.drawString(gcount, gCountX+(int)(50*Game.SCALE), gCountY+50);
 	}
 
 	public void loadLvlData(int[][] lvlData) {
