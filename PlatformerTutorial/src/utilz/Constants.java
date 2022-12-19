@@ -35,7 +35,7 @@ public class Constants {
 				case HIT:
 					return 3;
 				case DEAD:
-					return 3;
+					return 4;
 				}
 			}
 

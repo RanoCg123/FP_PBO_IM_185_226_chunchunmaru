@@ -59,7 +59,7 @@ public class EnemyManager {
 	}
 	private void loadEnemyImgs() {
 		BufferedImage temp = LoadSave.GetSpriteAtlas(LoadSave.ROBOT_ATLAS);
-		RobotArr = new BufferedImage[4][4];
+		RobotArr = new BufferedImage[5][4];
 		for (int j = 0; j < RobotArr.length; j++)
 			for (int i = 0; i < RobotArr[j].length; i++)
 				RobotArr[j][i] = temp.getSubimage(i * 64, j * 40, 64, 40);
