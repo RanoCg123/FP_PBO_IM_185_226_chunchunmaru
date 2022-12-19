@@ -48,7 +48,13 @@ public abstract class Enemy extends Entity {
 			}
 		}
 	}
-
+	public void hurt(int amount) {
+		currentHealth -= amount;
+		if (currentHealth <= 0)
+			newState(DEAD);
+		else
+			newState(HIT);
+	}
 	protected void updateInAir(int[][] lvlData) {
 		if (CanMoveHere(hitbox.x, hitbox.y + fallSpeed, hitbox.width, hitbox.height, lvlData)) {
 			hitbox.y += fallSpeed;

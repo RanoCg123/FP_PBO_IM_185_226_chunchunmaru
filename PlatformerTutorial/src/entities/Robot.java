@@ -8,15 +8,29 @@ import java.awt.geom.Rectangle2D.Float;
 import static utilz.Constants.Directions.*;
 import main.Game;
 public class Robot extends Enemy{
-
+	private Rectangle2D.Float attackBox;
+	private int attackBoxOffsetX;
 	public Robot(float x, float y) {
 		super(x, y, ROBOT_WIDTH, ROBOT_HEIGHT, ROBOT);
-		initHitbox(x, y, (int)(16*Game.SCALE), (int)(24*Game.SCALE));
+		initHitbox(x, y, (int)(30*Game.SCALE), (int)(24*Game.SCALE));
+		initAttackBox();
 	}
 	public void update (int[][]lvldata, Player player) {
 		updatemove(lvldata, player);
 		updateAnimationTick();
-		
+		updateAttackBox();
+	}
+	private void updateAttackBox() {
+		if (walkDir == RIGHT)
+			attackBox.x = hitbox.x + hitbox.width + (int) (Game.SCALE * 5);
+		else if (walkDir == LEFT)
+			attackBox.x = hitbox.x - hitbox.width - (int) (Game.SCALE * 5);
+
+		attackBox.y = hitbox.y + (Game.SCALE * 10);
+	}
+	private void initAttackBox() {
+		attackBox = new Rectangle2D.Float(x, y, (int) (16 * Game.SCALE), (int) (20 * Game.SCALE));
+		attackBoxOffsetX = (int) (Game.SCALE * 30);
 	}
 	private void updatemove(int[][] lvlData, Player player) {
 		if (firstUpdate)
@@ -41,6 +55,10 @@ public class Robot extends Enemy{
 				break;
 			}
 		}
+	public void drawAttackBox(Graphics g, int xLvlOffset) {
+		g.setColor(Color.red);
+		g.drawRect((int) (attackBox.x - xLvlOffset), (int) attackBox.y, (int) attackBox.width, (int) attackBox.height);
+	}
 	public int flipX() {
 		if (walkDir == RIGHT)
 			return width;
@@ -54,5 +72,9 @@ public class Robot extends Enemy{
 		else
 			return 1;
 
+	}
+	public boolean isActive() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	}

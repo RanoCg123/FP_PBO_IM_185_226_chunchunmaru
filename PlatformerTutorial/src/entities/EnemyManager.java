@@ -34,18 +34,27 @@ public class EnemyManager {
 		drawRobots(g, xLvlOffset);
 		for (Robot a : robots)
 			a.drawHitbox(g, xLvlOffset);
-	}
+		for (Robot a : robots)
+			a.drawAttackBox(g, xLvlOffset);
+	};
 
 	private void drawRobots(Graphics g, int xLvlOffset) {
 		for (Robot c : robots)
-				g.drawImage(RobotArr[c.getEnemyState()][c.getAniIndex()], (int) c.getHitbox().x - xLvlOffset - ROBOT_DRAWOFFSET_X , (int) c.getHitbox().y - 10,
-						(int)(64 * 2), (int)(40 * 2), null);
+				g.drawImage(RobotArr[c.getEnemyState()][c.getAniIndex()], (int) c.getHitbox().x - xLvlOffset - ROBOT_DRAWOFFSET_X + c.flipX(), (int) c.getHitbox().y - 10,
+						(int)(64 * 2)*c.flipW(), (int)(40 * 2), null);
 //				c.drawHitbox(g,xLvlOffset);
 //				c.drawAttackBox(g, xLvlOffset);
 
 
 	}
-
+	public void checkEnemyHit(Rectangle2D.Float attackBox) {
+		for (Robot c : robots)
+			if (c.isActive())
+				if (attackBox.intersects(c.getHitbox())) {
+					c.hurt(10);
+					return;
+				}
+	}
 	private void loadEnemyImgs() {
 		BufferedImage temp = LoadSave.GetSpriteAtlas(LoadSave.ROBOT_ATLAS);
 		RobotArr = new BufferedImage[4][4];

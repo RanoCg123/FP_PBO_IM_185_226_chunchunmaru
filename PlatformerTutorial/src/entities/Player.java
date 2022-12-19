@@ -80,7 +80,7 @@ public class Player extends Entity {
 		attackBox.y = hitbox.y + (Game.SCALE * 10);
 	}
 	public void render(Graphics g, int xLvlOffset) {
-		g.drawImage(animations[playerAction][aniIndex], (int) (hitbox.x - xDrawOffset) - xLvlOffset, (int) (hitbox.y - yDrawOffset), width, height, null);
+		g.drawImage(animations[playerAction][aniIndex], (int) (hitbox.x - xDrawOffset)+flipX - xLvlOffset, (int) (hitbox.y - yDrawOffset), width*flipW, height, null);
 		//drawHitbox(g, xLvlOffset);
 		drawAttackBox(g, xLvlOffset);
 		drawUI(g);
@@ -141,10 +141,17 @@ public class Player extends Entity {
 
 		float xSpeed = 0;
 
-		if (left)
+		if (left) {
 			xSpeed -= playerSpeed;
-		if (right)
+			flipX = width;
+			flipW = -1;
+		}
+		if (right) {
 			xSpeed += playerSpeed;
+			flipX = 0;
+			flipW = 1;
+		}
+
 
 		if (!inAir) 
 			if (!IsEntityOnFloor(hitbox, lvlData))
