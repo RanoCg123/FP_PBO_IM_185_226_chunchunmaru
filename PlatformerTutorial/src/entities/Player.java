@@ -61,12 +61,12 @@ public class Player extends Entity {
 		super(x, y, width, height);
 		this.playing=playing;
 		loadAnimations();
-		initHitbox(x, y, (int) (20 * Game.SCALE), (int) (27 * Game.SCALE));
+		initHitbox(x, y, (int) (17 * Game.SCALE), (int) (27 * Game.SCALE));
 		initAttackBox();
 	}
 
 	private void initAttackBox() {
-		attackBox = new Rectangle2D.Float(x, y, (int) (20 * Game.SCALE), (int) (20 * Game.SCALE));
+		attackBox = new Rectangle2D.Float(x, y, (int) (17 * Game.SCALE), (int) (20 * Game.SCALE));
 	}
 	public void update() {
 		updateHealthBar();
