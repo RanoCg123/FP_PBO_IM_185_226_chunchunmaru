@@ -5,7 +5,6 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
-import java.awt.geom.Rectangle2D.Float;
 import java.awt.image.BufferedImage;
 
 import entities.EnemyManager;
@@ -28,14 +27,36 @@ public class Playing extends State implements Statemethods {
 	private int xLvlOffset;
 	private int leftBorder = (int) (0.25 * Game.GAME_WIDTH);
 	private int rightBorder = (int) (0.75 * game.GAME_WIDTH);
-	private int lvlTilesWide = LoadSave.GetLevelData()[0].length;
-	private int maxTilesOffset = lvlTilesWide - Game.TILES_IN_WIDTH;
-	private int maxLvlOffsetX = maxTilesOffset * Game.TILES_SIZE;
+	private int maxLvlOffsetX;
+
 	private boolean gameover;
+	private int lvlCompleted = 0;
+
 	public Playing(Game game) {
 		super(game);
 		initClasses();
 		backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.PLAYING_BACKGROUND);
+
+		calcLvlOffset();
+		loadStartLevel();
+	}
+
+	public void setMaxLvlOffset(int lvlOffset) {
+		this.maxLvlOffsetX = lvlOffset;
+	}
+	
+	public void loadNextLevel() {
+		resetAll();
+		levelManager.loadNextLevel();
+//		player.setSpawn(levelManager.getCurrentLevel().getPlayerSpawn());
+	}
+
+	private void loadStartLevel() {
+		enemyManager.loadEnemies(levelManager.getCurrentLevel());
+	}
+
+	private void calcLvlOffset() {
+		maxLvlOffsetX = levelManager.getCurrentLevel().getLvlOffset();
 	}
 
 	private void initClasses() {
@@ -101,27 +122,28 @@ public class Playing extends State implements Statemethods {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(gameover) {
+		if (gameover) {
 			gameoverlayer.keyPressed(e);
-		}else
-		switch (e.getKeyCode()) {
-		case KeyEvent.VK_A:
-			player.setLeft(true);
-			break;
-		case KeyEvent.VK_D:
-			player.setRight(true);
-			break;
-		case KeyEvent.VK_SPACE:
-			player.setJump(true);
-			player.jcount();
-			break;
-		case KeyEvent.VK_BACK_SPACE:
-			paused = !paused;;
-			break;
-		case KeyEvent.VK_ESCAPE:
-			paused = !paused;
-			break;
-		}
+		} else
+			switch (e.getKeyCode()) {
+			case KeyEvent.VK_A:
+				player.setLeft(true);
+				break;
+			case KeyEvent.VK_D:
+				player.setRight(true);
+				break;
+			case KeyEvent.VK_SPACE:
+				player.setJump(true);
+				player.jcount();
+				break;
+			case KeyEvent.VK_BACK_SPACE:
+				paused = !paused;
+				;
+				break;
+			case KeyEvent.VK_ESCAPE:
+				paused = !paused;
+				break;
+			}
 	}
 
 	@Override
@@ -145,25 +167,25 @@ public class Playing extends State implements Statemethods {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		if(!gameover)
+		if (!gameover)
 			if (paused)
-			pauseMenu.mousePressed(e);
+				pauseMenu.mousePressed(e);
 
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		if(!gameover)
-		 if (paused)
-			pauseMenu.mouseReleased(e);
+		if (!gameover)
+			if (paused)
+				pauseMenu.mouseReleased(e);
 
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		if(!gameover)
-		if (paused)
-			pauseMenu.mouseMoved(e);
+		if (!gameover)
+			if (paused)
+				pauseMenu.mouseMoved(e);
 
 	}
 
@@ -179,21 +201,30 @@ public class Playing extends State implements Statemethods {
 		return player;
 	}
 
+	public EnemyManager getEnemyManager() {
+		return enemyManager;
+	}
+
 	public void resetAll() {
 		gameover = false;
 		paused = false;
+		lvlCompleted = 0;
 		player.resetAll();
 		enemyManager.resetAllEnemies();
 	}
 
 	public void checkEnemyHit(Rectangle2D.Float attackBox) {
 		enemyManager.checkEnemyHit(attackBox);
-		
+
 	}
 
 	public void setGameOver(boolean b) {
-		this.gameover=b;
-		
+		this.gameover = b;
+
+	}
+
+	public void setLevelCompleted(int levelCompleted) {
+		this.lvlCompleted = levelCompleted;
 	}
 
 }

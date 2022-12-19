@@ -1,14 +1,15 @@
 package entities;
 
-import java.awt.Color;
+import static utilz.Constants.EnemyConstants.ROBOT_DRAWOFFSET_X;
+
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import entities.Entity;
+
 import gamestates.Playing;
+import levels.Level;
 import utilz.LoadSave;
-import static utilz.Constants.EnemyConstants.*;
 
 public class EnemyManager {
 
@@ -19,16 +20,21 @@ public class EnemyManager {
 	public EnemyManager(Playing playing) {
 		this.playing = playing;
 		loadEnemyImgs();
-		addEnemies();
 	}
 	
-	private void addEnemies() {
-		robots = LoadSave.GetRobots();
+	public void loadEnemies(Level level) {
+		robots = level.getRobots();
 	}
 	public void update(int[][]lvldata, Player player) {
+		boolean isAnyActive = false;
 		for (Robot c : robots)
-			if (c.isActive())
+			if (c.isActive()) {
 				c.update(lvldata, player);
+				isAnyActive = true;
+			}
+		if(!isAnyActive)
+			playing.loadNextLevel();
+//			playing.setLevelCompleted(true);
 	}
 	
 	public void draw(Graphics g, int xLvlOffset) {
