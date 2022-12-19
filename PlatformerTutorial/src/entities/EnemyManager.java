@@ -27,6 +27,7 @@ public class EnemyManager {
 	}
 	public void update(int[][]lvldata, Player player) {
 		for (Robot c : robots)
+			if (c.isActive())
 				c.update(lvldata, player);
 	}
 	
@@ -40,6 +41,7 @@ public class EnemyManager {
 
 	private void drawRobots(Graphics g, int xLvlOffset) {
 		for (Robot c : robots)
+			if (c.isActive())
 				g.drawImage(RobotArr[c.getEnemyState()][c.getAniIndex()], (int) c.getHitbox().x - xLvlOffset - ROBOT_DRAWOFFSET_X + c.flipX(), (int) c.getHitbox().y - 10,
 						(int)(64 * 2)*c.flipW(), (int)(40 * 2), null);
 //				c.drawHitbox(g,xLvlOffset);
@@ -51,7 +53,7 @@ public class EnemyManager {
 		for (Robot c : robots)
 			if (c.isActive())
 				if (attackBox.intersects(c.getHitbox())) {
-					c.hurt(10);
+					c.hurt(2);
 					return;
 				}
 	}
@@ -61,5 +63,10 @@ public class EnemyManager {
 		for (int j = 0; j < RobotArr.length; j++)
 			for (int i = 0; i < RobotArr[j].length; i++)
 				RobotArr[j][i] = temp.getSubimage(i * 64, j * 40, 64, 40);
+	}
+
+	public void resetAllEnemies() {
+		for (Robot c : robots)
+			c.resetEnemy();
 	}
 }

@@ -29,8 +29,7 @@ public class Robot extends Enemy{
 		attackBox.y = hitbox.y + (Game.SCALE * 10);
 	}
 	private void initAttackBox() {
-		attackBox = new Rectangle2D.Float(x, y, (int) (16 * Game.SCALE), (int) (20 * Game.SCALE));
-		attackBoxOffsetX = (int) (Game.SCALE * 30);
+		attackBox = new Rectangle2D.Float(x, y, (int) (20 * Game.SCALE), (int) (20 * Game.SCALE));
 	}
 	private void updatemove(int[][] lvlData, Player player) {
 		if (firstUpdate)
@@ -49,12 +48,19 @@ public class Robot extends Enemy{
 				move(lvlData);
 				break;
 			case ATTACK:
+				if (aniIndex == 0)
+					attackChecked = false;
+				if (aniIndex == 2 && !attackChecked)
+					checkPlayerHit(attackBox, player);
 
 				break;
 			case HIT:
 				break;
+			case DEAD:
+				break;
 			}
 		}
+	
 	public void drawAttackBox(Graphics g, int xLvlOffset) {
 		g.setColor(Color.red);
 		g.drawRect((int) (attackBox.x - xLvlOffset), (int) attackBox.y, (int) attackBox.width, (int) attackBox.height);
@@ -72,9 +78,5 @@ public class Robot extends Enemy{
 		else
 			return 1;
 
-	}
-	public boolean isActive() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 	}
