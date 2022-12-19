@@ -6,4 +6,4 @@ Final project kelas PBO D ITS 2022
 ### Eclipse
 - Right click "Res" folder
 - Build Path
-- Go to source tab
+- Use as Source Folder
