@@ -33,7 +33,6 @@ public class Level {
 		createDrops();
 		createContainers();
 		calcLvlOffsets();
-//		calcPlayerSpawn();
 	}
 	private void createContainers() {
 	containers = HelpMethods.GetContainers(img);
@@ -42,10 +41,7 @@ public class Level {
 	private void createDrops() {
 	drops = HelpMethods.GetDrops(img);
 	}
-//	private void calcPlayerSpawn() {
-//		playerSpawn = GetPlayerSpawn(img);
-//	}
-
+	
 	private void calcLvlOffsets() {
 		lvlTilesWide = img.getWidth();
 		maxTilesOffset = lvlTilesWide - Game.TILES_IN_WIDTH;
