@@ -40,7 +40,7 @@ public class HelpMethods {
 		int value = lvlData[yTile][xTile];
 
 		if (value >= 60 || value < 0
-				|| value != 11 && value != 23 && value != 48 && value != 49 && value != 50 && value != 51)
+				|| value != 11 && value != 23 && value != 48 && value != 49 && value != 50 && value != 51 && value != 52)
 			return true;
 		return false;
 	}
