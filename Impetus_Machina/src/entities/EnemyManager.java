@@ -28,6 +28,7 @@ public class EnemyManager {
 	public void update(int[][]lvldata, Player player) {
 		boolean isAnyActive = false;
 		for (Robot c : robots)
+			
 			if (c.isActive()) {
 				c.update(lvldata, player);
 				isAnyActive = true;
@@ -39,10 +40,10 @@ public class EnemyManager {
 	
 	public void draw(Graphics g, int xLvlOffset) {
 		drawRobots(g, xLvlOffset);
-		for (Robot a : robots)
-			a.drawHitbox(g, xLvlOffset);
-		for (Robot a : robots)
-			a.drawAttackBox(g, xLvlOffset);
+	//	for (Robot a : robots)
+		//	a.drawHitbox(g, xLvlOffset);
+		//for (Robot a : robots)
+			//a.drawAttackBox(g, xLvlOffset);
 	};
 
 	private void drawRobots(Graphics g, int xLvlOffset) {
@@ -50,16 +51,15 @@ public class EnemyManager {
 			if (c.isActive())
 				g.drawImage(RobotArr[c.getEnemyState()][c.getAniIndex()], (int) c.getHitbox().x - xLvlOffset - ROBOT_DRAWOFFSET_X + c.flipX(), (int) c.getHitbox().y - 10,
 						(int)(64 * 2)*c.flipW(), (int)(40 * 2), null);
-//				c.drawHitbox(g,xLvlOffset);
-//				c.drawAttackBox(g, xLvlOffset);
 
 
 	}
 	public void checkEnemyHit(Rectangle2D.Float attackBox) {
 		for (Robot c : robots)
+			if(c.getCurrentHealth()>0)
 			if (c.isActive())
 				if (attackBox.intersects(c.getHitbox())) {
-					c.hurt(2);
+					c.hurt(2, playing); 
 					return;
 				}
 	}

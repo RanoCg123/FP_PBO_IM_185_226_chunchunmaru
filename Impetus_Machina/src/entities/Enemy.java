@@ -5,6 +5,7 @@ import static utilz.HelpMethods.*;
 
 import java.awt.geom.Rectangle2D;
 
+import gamestates.Playing;
 import main.Game;
 
 public abstract class Enemy extends Entity {
@@ -49,10 +50,11 @@ public abstract class Enemy extends Entity {
 			}
 		}
 	}
-	public void hurt(int amount) {
+	public void hurt(int amount, Playing playing) {
 		currentHealth -= amount;
-		if (currentHealth <= 0)
+		if (currentHealth <= 0) {
 			newState(DEAD);
+			playing.getPlayer().changegear(1);}
 		else
 			newState(HIT);
 	}
@@ -150,5 +152,8 @@ public abstract class Enemy extends Entity {
 	}
 	public boolean isActive() {
 		return active;
+	}
+	public int getCurrentHealth() {
+		return currentHealth;
 	}
 }

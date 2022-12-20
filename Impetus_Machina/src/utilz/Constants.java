@@ -1,8 +1,8 @@
 package utilz;
 
 import main.Game;
-
 public class Constants {
+
 	public static class EnemyConstants {
 		public static final int ROBOT = 0;
 
@@ -70,11 +70,33 @@ public class Constants {
 	public static class ObjectConstants {
 		public static final int SPIKE = 0;
 
+		public static final int TOOLBOX = 1;
+		public static final int GEARS = 2;
+		public static final int BARREL = 3;
+		public static final int BOX = 4;
+
+		public static final int TOOLBOX_VALUE = 5;
+		public static final int GEARS_VALUE = 5 ;
+
 		public static final int CONTAINER_WIDTH_DEFAULT = 40;
 		public static final int CONTAINER_HEIGHT_DEFAULT = 30;
 		public static final int CONTAINER_WIDTH = (int) (Game.SCALE * CONTAINER_WIDTH_DEFAULT);
 		public static final int CONTAINER_HEIGHT = (int) (Game.SCALE * CONTAINER_HEIGHT_DEFAULT);
 
+		public static final int DROPS_WIDTH_DEFAULT = 16;
+		public static final int DROPS_HEIGHT_DEFAULT = 16;
+		public static final int DROPS_WIDTH = (int) (Game.SCALE * DROPS_WIDTH_DEFAULT);
+		public static final int DROPS_HEIGHT = (int) (Game.SCALE * DROPS_HEIGHT_DEFAULT);
+
+		public static int GetSpriteAmount(int object_type) {
+			switch (object_type) {
+			case TOOLBOX, GEARS:
+				return 7;
+			case BARREL, BOX:
+				return 8;
+			}
+			return 1;
+		}
 		public static final int SPIKE_WIDTH_DEFAULT = 32;
 		public static final int SPIKE_HEIGHT_DEFAULT = 32;
 		public static final int SPIKE_WIDTH = (int) (Game.SCALE * SPIKE_WIDTH_DEFAULT);

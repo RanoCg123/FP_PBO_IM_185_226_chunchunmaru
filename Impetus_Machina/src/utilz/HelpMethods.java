@@ -1,6 +1,7 @@
 package utilz;
 
 import static utilz.Constants.EnemyConstants.ROBOT;
+import static utilz.Constants.ObjectConstants.*;
 
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
@@ -9,6 +10,8 @@ import java.util.ArrayList;
 
 import entities.Robot;
 import main.Game;
+import object.*;
+
 
 public class HelpMethods {
 
@@ -135,6 +138,32 @@ public class HelpMethods {
 			}
 		return list;
 	}
+	public static ArrayList<Drops> GetDrops(BufferedImage img) {
+		ArrayList<Drops> list = new ArrayList<>();
+		for (int j = 0; j < img.getHeight(); j++)
+			for (int i = 0; i < img.getWidth(); i++) {
+				Color color = new Color(img.getRGB(i, j));
+				int value = color.getBlue();
+				if (value == TOOLBOX || value == GEARS)
+					list.add(new Drops(i * Game.TILES_SIZE, j * Game.TILES_SIZE, value));
+			}
+
+		return list;
+	}
+
+	public static ArrayList<Containers> GetContainers(BufferedImage img) {
+		ArrayList<Containers> list = new ArrayList<>();
+		for (int j = 0; j < img.getHeight(); j++)
+			for (int i = 0; i < img.getWidth(); i++) {
+				Color color = new Color(img.getRGB(i, j));
+				int value = color.getBlue();
+				if (value == BOX || value == BARREL)
+					list.add(new Containers(i * Game.TILES_SIZE, j * Game.TILES_SIZE, value));
+			}
+
+		return list;
+	}
+
 //
 //	public static ArrayList<Spike> GetSpikes() {
 //		BufferedImage img = GetSpriteAtlas(LEVEL_ONE_DATA);

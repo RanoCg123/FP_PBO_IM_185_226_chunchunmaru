@@ -10,12 +10,17 @@ import java.util.ArrayList;
 
 import entities.Robot;
 import main.Game;
+import object.Containers;
+import object.Drops;
+import utilz.HelpMethods;
 
 public class Level {
 
 	private BufferedImage img;
 	private int[][] lvlData;
 	private ArrayList<Robot> robots;
+	private ArrayList<Drops> drops;
+	private ArrayList<Containers> containers;
 	private int lvlTilesWide;
 	private int maxTilesOffset;
 	private int maxLvlOffsetX;
@@ -25,10 +30,18 @@ public class Level {
 		this.img = img;
 		createLevelData();
 		createEnemies();
+		createDrops();
+		createContainers();
 		calcLvlOffsets();
 //		calcPlayerSpawn();
 	}
-//
+	private void createContainers() {
+	containers = HelpMethods.GetContainers(img);
+}
+
+	private void createDrops() {
+	drops = HelpMethods.GetDrops(img);
+	}
 //	private void calcPlayerSpawn() {
 //		playerSpawn = GetPlayerSpawn(img);
 //	}
@@ -63,6 +76,18 @@ public class Level {
 		return robots;
 	}
 
+	public ArrayList<Drops> getDrops() {
+		return drops;
+	}
+	public void setDrops(ArrayList<Drops> drops) {
+		this.drops = drops;
+	}
+	public ArrayList<Containers> getContainers() {
+		return containers;
+	}
+	public void setContainers(ArrayList<Containers> containers) {
+		this.containers = containers;
+	}
 	public Point getPlayerSpawn() {
 		return playerSpawn;
 	}

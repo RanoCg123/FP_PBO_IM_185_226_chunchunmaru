@@ -1,16 +1,19 @@
 package gamestates;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.Rectangle2D.Float;
 import java.awt.image.BufferedImage;
 
 import entities.EnemyManager;
 import entities.Player;
 import levels.LevelManager;
 import main.Game;
+import object.ObjectManager;
 import ui.Gameover;
 import ui.PauseMenu;
 import utilz.LoadSave;
@@ -20,6 +23,7 @@ public class Playing extends State implements Statemethods {
 	private LevelManager levelManager;
 	private BufferedImage backgroundImg;
 	private EnemyManager enemyManager;
+	private ObjectManager objectmanager;
 	private PauseMenu pauseMenu;
 	private Gameover gameoverlayer;
 	private boolean paused = false;
@@ -58,6 +62,7 @@ public class Playing extends State implements Statemethods {
 
 	private void loadStartLevel() {
 		enemyManager.loadEnemies(levelManager.getCurrentLevel());
+		objectmanager.loadObjects(levelManager.getCurrentLevel());
 	}
 
 	private void calcLvlOffset() {
@@ -67,6 +72,7 @@ public class Playing extends State implements Statemethods {
 	private void initClasses() {
 		levelManager = new LevelManager(game);
 		enemyManager = new EnemyManager(this);
+		objectmanager = new ObjectManager(this);
 		player = new Player(200, 500, (int) (64 * Game.SCALE), (int) (40 * Game.SCALE), this);
 		player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
 		pauseMenu = new PauseMenu(this);
@@ -78,6 +84,7 @@ public class Playing extends State implements Statemethods {
 		if (!paused && !gameover) {
 			levelManager.update();
 			enemyManager.update(levelManager.getCurrentLevel().getLevelData(), getPlayer());
+			objectmanager.update();
 			checkBorder();
 			player.update();
 		} else {
@@ -109,12 +116,13 @@ public class Playing extends State implements Statemethods {
 		levelManager.draw(g, xLvlOffset);
 		player.render(g, xLvlOffset);
 		enemyManager.draw(g, xLvlOffset);
-
+		objectmanager.draw(g, xLvlOffset);
 		if (paused) {
 			g.setColor(new Color(0, 0, 0, 100));
 			g.fillRect(0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT);
 			pauseMenu.draw(g);
 		} else if (gameover) {
+			g.setFont(new Font("TimesRoman", Font.PLAIN, 10)); 
 			gameoverlayer.draw(g);
 		}
 	}
@@ -208,7 +216,9 @@ public class Playing extends State implements Statemethods {
 	public EnemyManager getEnemyManager() {
 		return enemyManager;
 	}
-
+	public ObjectManager getObjectManager() {
+		return objectmanager;
+	}
 	public void resetAll() {
 		gameover = false;
 		paused = false;
@@ -229,6 +239,13 @@ public class Playing extends State implements Statemethods {
 
 	public void setLevelCompleted(int levelCompleted) {
 		this.lvlCompleted = levelCompleted;
+	}
+
+	public void checkdropsget(Rectangle2D.Float hitbox) {
+		objectmanager.checkObjectTouched(hitbox);
+	}
+	public void checkobjecthit(Rectangle2D.Float attackBox) {
+		objectmanager.checkObjectHit(attackBox);
 	}
 
 }

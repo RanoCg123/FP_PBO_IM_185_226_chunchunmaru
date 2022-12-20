@@ -61,7 +61,7 @@ public class Player extends Entity {
 	
 	private BufferedImage gcimage;
 	private int gCountWidth = (int) (120 * Game.SCALE);
-	private int gCountHeight = (int) (64 * Game.SCALE);
+	private int gCountHeight = (int) (32 * Game.SCALE);
 	private int gCountX = (int) (640 * Game.SCALE);
 	private int gCountY = (int) (10 * Game.SCALE);
 	private int gears=000;
@@ -87,7 +87,9 @@ public class Player extends Entity {
 		}
 
 		updateAttackBox();
-
+		if(moving) {
+			checkDrops();
+		}
 		updatePos();
 		if (attacking)
 			checkAttack();
@@ -95,11 +97,17 @@ public class Player extends Entity {
 		setAnimation();
 	}
 
+	private void checkDrops() {
+		playing.checkdropsget(hitbox);
+		
+	}
+
 	private void checkAttack() {
 		if (attackChecked || aniIndex != 1)
 			return;
 		attackChecked = true;
 		playing.checkEnemyHit(attackBox);
+		playing.checkobjecthit(attackBox);
 
 	}
 	private void updateGearCount() {
@@ -121,8 +129,8 @@ public class Player extends Entity {
 	public void render(Graphics g, int xLvlOffset) {
 		g.drawImage(animations[playerAction][aniIndex], (int) (hitbox.x - xDrawOffset) + flipX - xLvlOffset,
 				(int) (hitbox.y - yDrawOffset), width * flipW, height, null);
-		drawHitbox(g, xLvlOffset);
-		drawAttackBox(g, xLvlOffset);
+		//drawHitbox(g, xLvlOffset);
+		//drawAttackBox(g, xLvlOffset);
 		drawUI(g);
 	}
 
