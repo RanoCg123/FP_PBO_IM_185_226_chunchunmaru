@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import gamestates.Playing;
 import levels.Level;
-import objects.*;
 import utilz.LoadSave;
 
 public class ObjectManager {
@@ -46,7 +45,7 @@ public class ObjectManager {
 				if (gc.isActive()) {
 					if (gc.getHitbox().intersects(attackbox)) {
 						gc.setAnimation(true);
-						int type = 0;
+						int type = 2;
 						if (gc.getObjType() == BARREL)
 							type = 1;
 						Dropss.add(new Drops((int) (gc.getHitbox().x + gc.getHitbox().width / 2), (int) (gc.getHitbox().y - gc.getHitbox().height / 2), type));
