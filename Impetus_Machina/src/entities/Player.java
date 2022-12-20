@@ -58,14 +58,15 @@ public class Player extends Entity {
 
 	private boolean attackChecked;
 	private Playing playing;
-	
+
 	private BufferedImage gcimage;
 	private int gCountWidth = (int) (120 * Game.SCALE);
 	private int gCountHeight = (int) (32 * Game.SCALE);
 	private int gCountX = (int) (640 * Game.SCALE);
 	private int gCountY = (int) (10 * Game.SCALE);
-	private int gears=000;
+	private int gears = 000;
 	private String gcount;
+
 	public Player(float x, float y, int width, int height, Playing playing) {
 		super(x, y, width, height);
 		this.playing = playing;
@@ -87,7 +88,7 @@ public class Player extends Entity {
 		}
 
 		updateAttackBox();
-		if(moving) {
+		if (moving) {
 			checkDrops();
 		}
 		updatePos();
@@ -99,7 +100,7 @@ public class Player extends Entity {
 
 	private void checkDrops() {
 		playing.checkdropsget(hitbox);
-		
+
 	}
 
 	private void checkAttack() {
@@ -110,9 +111,11 @@ public class Player extends Entity {
 		playing.checkobjecthit(attackBox);
 
 	}
+
 	private void updateGearCount() {
-		gcount = (" "+gears);
+		gcount = (" " + gears);
 	}
+
 	private void updateHealthBar() {
 		healthWidth = (int) ((currentHealth / (float) maxHealth) * healthBarWidth);
 	}
@@ -129,8 +132,8 @@ public class Player extends Entity {
 	public void render(Graphics g, int xLvlOffset) {
 		g.drawImage(animations[playerAction][aniIndex], (int) (hitbox.x - xDrawOffset) + flipX - xLvlOffset,
 				(int) (hitbox.y - yDrawOffset), width * flipW, height, null);
-		//drawHitbox(g, xLvlOffset);
-		//drawAttackBox(g, xLvlOffset);
+		// drawHitbox(g, xLvlOffset);
+		// drawAttackBox(g, xLvlOffset);
 		drawUI(g);
 	}
 
@@ -150,9 +153,7 @@ public class Player extends Entity {
 				attacking = false;
 				attackChecked = false;
 			}
-
 		}
-
 	}
 
 	private void setAnimation() {
@@ -248,15 +249,16 @@ public class Player extends Entity {
 
 	public void changeHealth(int value) {
 		currentHealth = currentHealth + value;
-
 		if (currentHealth <= 0)
 			currentHealth = 0;
 		else if (currentHealth >= maxHealth)
 			currentHealth = maxHealth;
 	}
+
 	public void changegear(int value) {
 		gears = gears + value;
 	}
+
 	private void resetdoublejump() {
 		djcount = 0;
 		doublejump = false;
@@ -306,8 +308,8 @@ public class Player extends Entity {
 		g.fillRect(healthBarXStart + statusBarX, healthBarYStart + statusBarY, healthWidth, healthBarHeight);
 		g.drawImage(gcimage, gCountX, gCountY, gCountWidth, gCountHeight, null);
 		g.setColor(Color.black);
-		g.setFont(new Font("TimesRoman", Font.PLAIN, 40)); 
-		g.drawString(gcount, gCountX+(int)(50*Game.SCALE), gCountY+50);
+		g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+		g.drawString(gcount, gCountX + (int) (50 * Game.SCALE), gCountY + 50);
 	}
 
 	public void loadLvlData(int[][] lvlData) {
